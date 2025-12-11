@@ -1,0 +1,9 @@
+[
+  {"id": "NYC", "name": "Port of New York", "lat": 40.7128, "lon": -74.0060},
+  {"id": "LON", "name": "Port of London", "lat": 51.5074, "lon": -0.1278},
+  {"id": "SHA", "name": "Port of Shanghai", "lat": 31.2304, "lon": 121.4737},
+  {"id": "SIN", "name": "Port of Singapore", "lat": 1.3521, "lon": 103.8198},
+  {"id": "LAX", "name": "Port of Los Angeles", "lat": 33.7423, "lon": -118.2742},
+  {"id": "ROT", "name": "Port of Rotterdam", "lat": 51.9244, "lon": 4.4777},
+  {"id": "TOK", "name": "Port of Tokyo", "lat": 35.6762, "lon": 139.6503}
+]
