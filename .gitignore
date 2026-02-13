@@ -13,3 +13,13 @@
 /frontend/dist/
 /frontend/build/
 /frontend/.vscode/
+
+# --- CollabHub ---
+/collabhub/backend/node_modules/
+/collabhub/backend/dist/
+/collabhub/backend/uploads/
+/collabhub/backend/.env
+/collabhub/frontend/node_modules/
+/collabhub/frontend/dist/
+/collabhub/frontend/.env
+/collabhub/.env
