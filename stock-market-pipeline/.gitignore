@@ -1,0 +1,11 @@
+cat <<EOT >> .gitignore
+# Environments
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Airflow Logs
+logs/
+EOT
