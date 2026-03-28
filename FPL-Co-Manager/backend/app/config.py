@@ -50,6 +50,8 @@ class Settings(BaseSettings):
     hydra_database_url: str = "placeholder"
 
     cors_origins: str = "http://localhost:5173,http://127.0.0.1:5173"
+    # Optional: regex so every Vercel preview URL is allowed without listing each (e.g. https://.*\\.vercel\\.app)
+    cors_origin_regex: str = ""
 
     @model_validator(mode="after")
     def normalize_dify_start_variable_names(self) -> "Settings":

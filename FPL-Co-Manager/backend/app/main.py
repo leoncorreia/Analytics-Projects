@@ -39,6 +39,16 @@ async def lifespan(app: FastAPI):
 
 settings = get_settings()
 origins = [o.strip() for o in settings.cors_origins.split(",") if o.strip()]
+_cors_rx = (settings.cors_origin_regex or "").strip()
+
+_cors_kw: dict = {
+    "allow_origins": origins,
+    "allow_credentials": True,
+    "allow_methods": ["*"],
+    "allow_headers": ["*"],
+}
+if _cors_rx:
+    _cors_kw["allow_origin_regex"] = _cors_rx
 
 app = FastAPI(
     title="FPL AI Co-Manager",
@@ -47,13 +57,13 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+app.add_middleware(CORSMiddleware, **_cors_kw)
+
+@app.get("/")
+def root() -> dict[str, str]:
+    """Public entry when someone opens the API base URL in a browser."""
+    return {"service": "fpl-ai-co-manager", "docs": "/docs", "health": "/health"}
+
 
 app.include_router(health.router)
 app.include_router(import_team.router)

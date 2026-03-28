@@ -27,6 +27,10 @@ Setup and behavior vs acceptance criteria: **[docs/INTEGRATION_SETUP.md](docs/IN
 4. **Optional:** Set **`DIFY_INPUT_BUNDLE=fpl_context`** (any unused name) in `backend/.env`, add a matching **Paragraph** variable on START (e.g. `fpl_context`), and use **only** that one variable in the prompt via **`/`**. The backend still sends the four original keys for compatibility, plus the bundle.
 5. Each successful **`POST /api/analyze`** calls **`POST {DIFY_BASE_URL}/workflows/run`** and appends any returned text under `--- Dify workflow note ---` in the recommendation explanation (after deterministic + Kimi). Response flags: **`dify_used`**, **`dify_error`**.
 
+## Deploy (judge URL)
+
+**Give judges your Vercel URL** (the React app). The API runs on a Python host (e.g. **Render**) using **`render.yaml`** at the **repo root** for a one-click Blueprint, or manual settings in **[docs/DEPLOY.md](docs/DEPLOY.md)**. Set **`VITE_API_URL`** on Vercel to the API origin, and **`CORS_ORIGINS`** / optional **`CORS_ORIGIN_REGEX`** on the API for `*.vercel.app`.
+
 ## Quick start
 
 ### 1. Backend

@@ -2,6 +2,14 @@ import type { AnalyzeTeamResponse, MemoryRecordOut, Squad, TeamImportResponse } 
 
 const JSON_HEADERS = { "Content-Type": "application/json" };
 
+/** Production: set `VITE_API_URL` on Vercel to your hosted API origin (no trailing slash). Dev: unset → same-origin `/api` via Vite proxy. */
+const API_BASE = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, "") ?? "";
+
+function apiUrl(path: string): string {
+  const p = path.startsWith("/") ? path : `/${path}`;
+  return `${API_BASE}${p}`;
+}
+
 async function handle<T>(res: Response): Promise<T> {
   if (!res.ok) {
     let detail = res.statusText;
@@ -22,7 +30,7 @@ export async function importTeam(body: {
   bank: number;
   risk_profile: string;
 }): Promise<TeamImportResponse> {
-  const res = await fetch("/api/import-team", {
+  const res = await fetch(apiUrl("/api/import-team"), {
     method: "POST",
     headers: JSON_HEADERS,
     body: JSON.stringify(body),
@@ -35,7 +43,7 @@ export async function analyzeTeam(body: {
   squad: Squad;
   use_memory: boolean;
 }): Promise<AnalyzeTeamResponse> {
-  const res = await fetch("/api/analyze", {
+  const res = await fetch(apiUrl("/api/analyze"), {
     method: "POST",
     headers: JSON_HEADERS,
     body: JSON.stringify(body),
@@ -44,7 +52,7 @@ export async function analyzeTeam(body: {
 }
 
 export async function getMemory(userId: string): Promise<MemoryRecordOut | null> {
-  const res = await fetch(`/api/memory/${encodeURIComponent(userId)}`);
+  const res = await fetch(apiUrl(`/api/memory/${encodeURIComponent(userId)}`));
   if (res.status === 404) return null;
   if (!res.ok) {
     let detail = res.statusText;
@@ -64,13 +72,13 @@ export async function getMemory(userId: string): Promise<MemoryRecordOut | null>
 }
 
 export async function getDemoHints(): Promise<{ sample_team_id: number; note: string }> {
-  const res = await fetch("/api/demo-hints");
+  const res = await fetch(apiUrl("/api/demo-hints"));
   return handle(res);
 }
 
 export async function parseImage(file: File): Promise<unknown> {
   const fd = new FormData();
   fd.append("file", file);
-  const res = await fetch("/api/parse-image", { method: "POST", body: fd });
+  const res = await fetch(apiUrl("/api/parse-image"), { method: "POST", body: fd });
   return handle(res);
 }

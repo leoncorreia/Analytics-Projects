@@ -33,6 +33,7 @@ By default Vite proxies `/api` and `/health` to `http://127.0.0.1:8000`. If the 
 | `src/types.ts` | Shared TypeScript types |
 | `src/hooks/useStableUserId.ts` | Persists `user_id` in `localStorage` for memory APIs |
 
-## Optional env
+## Environment
 
-See `.env.example`. For production you may set `VITE_API_URL` and change `api.ts` to prefix requests — the dev setup uses the Vite proxy instead.
+- **Dev:** see `.env.example` — optional `VITE_DEV_PROXY_TARGET` if the API is not on port 8000. Leave `VITE_API_URL` unset so requests stay same-origin and the Vite proxy forwards `/api` to the backend.
+- **Production (e.g. Vercel):** set **`VITE_API_URL`** to the public API origin (no trailing slash), e.g. `https://your-api.onrender.com`. See **`../docs/DEPLOY.md`**.

@@ -1,0 +1,15 @@
+# Render Blueprint — deploy the FastAPI API (free tier sleeps when idle; first request may be slow).
+# Dashboard: New → Blueprint → connect this repo, then add secret env vars (GMI_API_KEY, etc.) in the service.
+# Frontend: deploy separately on Vercel (root directory FPL-Co-Manager/frontend, env VITE_API_URL).
+
+services:
+  - type: web
+    name: fpl-comanager-api
+    runtime: python
+    rootDir: FPL-Co-Manager/backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.0"
