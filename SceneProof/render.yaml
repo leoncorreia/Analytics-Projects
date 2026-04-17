@@ -1,0 +1,19 @@
+# Render Blueprint — API only (recommended with Vercel for the UI).
+# https://render.com/docs/blueprint-spec
+#
+# Set CORS_ORIGINS in the dashboard to your Vercel URL, e.g.
+# https://sceneproof.vercel.app
+
+services:
+  - type: web
+    name: sceneproof-api
+    runtime: python
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: CORS_ORIGINS
+        sync: false
