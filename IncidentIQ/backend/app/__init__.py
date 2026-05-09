@@ -1,1 +1,0 @@
-# IncidentIQ backend package
